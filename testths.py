@@ -1,0 +1,5 @@
+from thstrader import THSTrader
+
+
+ths_user = THSTrader()
+ths_user.set_cookie('user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MTYxODYxNDY6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEzMzNlN2JiYTc5NjBjMWRlYTExZWY2ZDY5ZjFiYWNhMTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=c8d5ab042516782e069542f70e3d4a25; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1516185881; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1516186149; PHPSESSID=jnl8rnvbi80rqqrmr0tr79qef1; isSaveAccount=0')
