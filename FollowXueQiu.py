@@ -1,55 +1,23 @@
-import requests as rq
-import json
-from bs4 import BeautifulSoup as bs
-import winsound
+from xq_comb import XqComb
+from thstrader import THSTrader
 import time
 
 
-xq_url1 = "https://xueqiu.com/P/ZH010389"
-xq_url = "http://xueqiu.com/cubes/rebalancing/history.json?cube_symbol=ZH010389&count=20&page=1"
+xqcomb = XqComb("ZH010389")
+ths_user = THSTrader()
+ths_user.set_cookie('Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934; user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532055942; PHPSESSID=758ed26ecae08370372ad2e4781612e9; isSaveAccount=0')
 
-my_headers = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-TW;q=0.6',
-    'Connection': 'keep-alive',
-    'Host': 'xueqiu.com',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
-    }
-
-xq_session = rq.Session()
-
-history_time = 0
+#print(str(xqcomb.last_operation))
 
 while(True):
-    time.sleep(5)
-    html = xq_session.get(xq_url1, headers = my_headers)
+    time.sleep(3)
+    ths_user.heartbeat()
+    if(xqcomb.get_comb_status_change()):
+        operate_stock_code = xqcomb.last_operation["stock_symbol"][2:8]
+        operate_stock_price = xqcomb.last_operation["price"]
+        if xqcomb.last_operation["weight"] > 50 :
+            ths_user.buy(operate_stock_code,operate_stock_price+0.04, 200)
+        else:
+            ths_user.sell(operate_stock_code,operate_stock_price-0.04, 200)
 
-    print(html)
-
-    pos_start = html.text.find('SNB.cubeInfo = ') + len('SNB.cubeInfo = ')
-    pos_end = html.text.find('SNB.cubePieData') - 2
-    date_value = html.text[pos_start:pos_end]
-    dic = json.loads(str(date_value))
     
-    if history_time == 0:
-        print(history_time)
-        history_time = dic['last_success_rebalancing']['updated_at']
-        print(history_time)
-        continue
-    elif history_time != dic['last_success_rebalancing']['updated_at']:
-        history_time = dic['last_success_rebalancing']['updated_at']
-        print(history_time)
-        break;
-        
-
-#print(dic['last_success_rebalancing']['updated_at'])
-
-#print(date_value[2])
-#print(date_value[3])
-print("start")
-for i in range(20):
-    winsound.Beep(2222,600)
-    winsound.Beep(1000,600)
-
