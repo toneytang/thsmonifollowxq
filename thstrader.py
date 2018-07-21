@@ -6,6 +6,8 @@ import logging
 import os
 import random
 import re
+from bs4 import BeautifulSoup as bs
+import json
 
 import requests
 
@@ -19,6 +21,7 @@ class THSTrader():
         self.account_config = None
         self.s = requests.Session()
         self.exchange_stock_account = dict()
+		#self.position = [[]]
     def set_cookie(self, my_cookie):
         my_headers = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -103,6 +106,23 @@ class THSTrader():
         }
         r = self.s.post(url, data = my_data)
         print ("sell" + str(r.status_code))
+		
+    def get_position(self):
+        #获取持仓股票
+        url = 'http://mncg.10jqka.com.cn/cgiwt/delegate/qryChicang'
+        r = self.s.get(url)
+        dic = json.loads(r.text)
+        print(dic["result"]["list"][0]["d_2102"])
+        
+    def get_available_case(self):
+        #获取当前可用资金
+        url = 'http://mncg.10jqka.com.cn/cgiwt/query/querydiv/?ajaxdatatype=html'
+        r = self.s.get(url)
+        soup = bs(r.content, "html.parser")
+        #print(soup)
+        kyye = float(soup.findAll('td', id = "kyye")[0].string)
+        print(kyye)
+        
 
 '''
 ths_user = THSTrader()
