@@ -107,12 +107,17 @@ class THSTrader():
         r = self.s.post(url, data = my_data)
         print ("sell" + str(r.status_code))
 		
-    def get_position(self):
+    def get_position(self, stock_num):
         #获取持仓股票
         url = 'http://mncg.10jqka.com.cn/cgiwt/delegate/qryChicang'
         r = self.s.get(url)
         dic = json.loads(r.text)
-        print(dic["result"]["list"][0]["d_2102"])
+        for stock in dic["result"]["list"] :
+            if stock['d_2102'] == stock_num :
+                return stock['d_2121']
+        return 0
+        #print(r.content)
+        #print(dic["result"]["list"][0]["d_2102"])
         
     def get_available_case(self):
         #获取当前可用资金
@@ -127,6 +132,10 @@ class THSTrader():
 '''
 ths_user = THSTrader()
 ths_user.set_cookie('Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934; user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532055942; PHPSESSID=758ed26ecae08370372ad2e4781612e9; isSaveAccount=0')
-ths_user.heartbeat()
-ths_user.buy(300290,7.54,200)
+stock_available_sell = ths_user.get_position('002807')
+print(stock_available_sell)
+stock_available_sell = ths_user.get_position('600022')
+print(stock_available_sell)
+stock_available_sell = ths_user.get_position('600023')
+print(stock_available_sell)
 '''

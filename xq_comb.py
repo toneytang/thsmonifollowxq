@@ -36,7 +36,7 @@ class XqComb():
             print(self.history_time)
             self.history_time = dic['last_success_rebalancing']['updated_at']
             print(self.history_time)
-            return True
+            return False
         elif self.history_time != dic['last_success_rebalancing']['updated_at']:
             self.history_time = dic['last_success_rebalancing']['updated_at']
             print(self.history_time)
