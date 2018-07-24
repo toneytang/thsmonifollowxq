@@ -71,6 +71,7 @@ class THSTrader():
         }
         #print(my_data)
         r = self.s.post(url, data=my_data)
+        #print(r.content)
         #print self.s.headers
         #print(r.url)
         print ("buy" + str(r.status_code))
@@ -127,6 +128,7 @@ class THSTrader():
         #print(soup)
         kyye = float(soup.findAll('td', id = "kyye")[0].string)
         print(kyye)
+        return kyye
         
 
 '''

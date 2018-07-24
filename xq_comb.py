@@ -41,6 +41,8 @@ class XqComb():
             self.history_time = dic['last_success_rebalancing']['updated_at']
             print(self.history_time)
             return True
+        else:
+            return False
 
 
 

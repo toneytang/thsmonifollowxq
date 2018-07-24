@@ -6,7 +6,7 @@ import winsound
 
 xqcomb = XqComb("ZH010389")
 ths_user = THSTrader()
-ths_user.set_cookie('Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934; user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532055942; PHPSESSID=758ed26ecae08370372ad2e4781612e9; isSaveAccount=0')
+ths_user.set_cookie('user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; isSaveAccount=0; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934,1532396427; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532396427; PHPSESSID=dcde4757dbdb86678c58132201f986df')
 
 #print(str(xqcomb.last_operation))
 
@@ -25,10 +25,13 @@ while(True):
         if xqcomb.last_operation["weight"] > 50 :
             #计算可用余额
             kyye = ths_user.get_available_case()
+            #print(kyye)
             #因为有3秒延迟，所以提高买价4分钱，以防买不到，另外，不能提高太多，以免追高
             price = operate_stock_price+0.04
+            #print(price)
             #按照可用余额和下单价格计算出下单的数量，以100股为单位
-            amount = ((kyye/price)/100) * 100
+            amount = (int((kyye/price)/100)) * 100
+            #print(amount)
             #在模拟平台下买单指令
             ths_user.buy(operate_stock_code,price, amount)
         else:
