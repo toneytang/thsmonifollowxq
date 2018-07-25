@@ -32,6 +32,9 @@ class XqComb():
         #print(date_value)
         dic = json.loads(str(date_value))
         self.last_operation = dic['sell_rebalancing']['rebalancing_histories'][0]
+        t = int(round(time.time()*1000))
+
+        
         if self.history_time == 0:
             print(self.history_time)
             self.history_time = dic['last_success_rebalancing']['updated_at']
@@ -39,6 +42,9 @@ class XqComb():
             return False
         elif self.history_time != dic['last_success_rebalancing']['updated_at']:
             self.history_time = dic['last_success_rebalancing']['updated_at']
+            if abs(t-int(dic['last_success_rebalancing']['updated_at'])) > 10000 :
+                print("更新超过5秒钟,本次调仓取消操作")
+                return False
             print(self.history_time)
             return True
         else:

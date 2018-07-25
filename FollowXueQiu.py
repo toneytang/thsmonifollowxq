@@ -6,7 +6,7 @@ import winsound
 
 xqcomb = XqComb("ZH010389")
 ths_user = THSTrader()
-ths_user.set_cookie('user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; isSaveAccount=0; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934,1532396427; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532396427; PHPSESSID=dcde4757dbdb86678c58132201f986df')
+ths_user.set_cookie('user=MDp0ZXN0X3Rlc3QyMTo6Tm9uZTo1MDA6Mzk0MjkwNzI1OjcsMTExMTExMTExMTEsNDA7NDQsMTEsNDA7NiwxLDQwOzUsMSw0MDozOjo6Mzg0MjkwNzI1OjE1MzIwNTU5Mzc6OjoxNDg5NTQzMjYwOjYwNDgwMDowOjEyOWZiY2FhZmNlYTNhYzFmNTZmMGVkMDYzZGQwOGZkOTpkZWZhdWx0XzI6MA%3D%3D; userid=384290725; u_name=test_test21; escapename=test_test21; ticket=bd4a025a585b88b072d603b62f89c902; isSaveAccount=0; Hm_lvt_78c58f01938e4d85eaf619eae71b4ed1=1532055934,1532396427,1532404063,1532481062; PHPSESSID=23d08725ede172002ba6b2045d15dc65; Hm_lpvt_78c58f01938e4d85eaf619eae71b4ed1=1532481119')
 
 #print(str(xqcomb.last_operation))
 
@@ -21,8 +21,9 @@ while(True):
         operate_stock_code = xqcomb.last_operation["stock_symbol"][2:8]
         #获取当前调仓目标的成交价格
         operate_stock_price = xqcomb.last_operation["price"]
+        #print(xqcomb.last_operation["weight"])
         #如果当前调仓后目标股票的权重大于50，说明是买入，否则说明是卖出
-        if xqcomb.last_operation["weight"] > 50 :
+        if xqcomb.last_operation["target_weight"] > 50 :
             #计算可用余额
             kyye = ths_user.get_available_case()
             #print(kyye)
